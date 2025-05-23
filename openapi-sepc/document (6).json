@@ -1,0 +1,443 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "order_management_service",
+    "contact": {},
+    "version": "v1.0"
+  },
+  "servers": [
+    {
+      "url": "https://1f955b4b-88c3-417b-9e88-d33047878100-prod.e1-us-east-azure.bijiraapis.dev/pizzamanagment/order-management-service/v1.0"
+    }
+  ],
+  "paths": {
+    "/orders": {
+      "post": {
+        "operationId": "postOrders",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrderRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BadRequest",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorPayload"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "InternalServerError",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorPayload"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "default": []
+          }
+        ],
+        "x-throttling-tier": "Unlimited",
+        "x-throttling-limit": {
+          "requestCount": -1,
+          "unit": "MINUTE"
+        },
+        "x-auth-type": "Application & Application User"
+      }
+    },
+    "/orders/{orderId}": {
+      "get": {
+        "operationId": "getOrdersOrderid",
+        "parameters": [
+          {
+            "name": "orderId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BadRequest",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorPayload"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "InternalServerError",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorPayload"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "default": []
+          }
+        ],
+        "x-throttling-tier": "Unlimited",
+        "x-throttling-limit": {
+          "requestCount": -1,
+          "unit": "MINUTE"
+        },
+        "x-auth-type": "Application & Application User"
+      },
+      "patch": {
+        "operationId": "patchOrdersOrderid",
+        "parameters": [
+          {
+            "name": "orderId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrderUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BadRequest",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorPayload"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "InternalServerError",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorPayload"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "default": []
+          }
+        ],
+        "x-throttling-tier": "Unlimited",
+        "x-throttling-limit": {
+          "requestCount": -1,
+          "unit": "MINUTE"
+        },
+        "x-auth-type": "Application & Application User"
+      }
+    },
+    "/pizzas": {
+      "get": {
+        "operationId": "getPizzas",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PizzaResponse"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "InternalServerError",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorPayload"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "default": []
+          }
+        ],
+        "x-throttling-tier": "Unlimited",
+        "x-throttling-limit": {
+          "requestCount": -1,
+          "unit": "MINUTE"
+        },
+        "x-auth-type": "Application & Application User"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ErrorPayload": {
+        "required": [
+          "message",
+          "method",
+          "path",
+          "reason",
+          "status",
+          "timestamp"
+        ],
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "method": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "timestamp": {
+            "type": "string"
+          }
+        }
+      },
+      "OrderPizzaRequest": {
+        "required": [
+          "customizations",
+          "pizzaId",
+          "quantity"
+        ],
+        "type": "object",
+        "properties": {
+          "customizations": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "pizzaId": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "additionalProperties": false
+      },
+      "OrderPizzaResponse": {
+        "required": [
+          "customizations",
+          "pizzaId",
+          "quantity"
+        ],
+        "type": "object",
+        "properties": {
+          "customizations": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "pizzaId": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "additionalProperties": false
+      },
+      "OrderRequest": {
+        "required": [
+          "customerName",
+          "pizzas"
+        ],
+        "type": "object",
+        "properties": {
+          "customerName": {
+            "type": "string"
+          },
+          "pizzas": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrderPizzaRequest"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "OrderResponse": {
+        "required": [
+          "customerName",
+          "id",
+          "pizzas",
+          "status",
+          "totalPrice"
+        ],
+        "type": "object",
+        "properties": {
+          "customerName": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "pizzas": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrderPizzaResponse"
+            }
+          },
+          "status": {
+            "$ref": "#/components/schemas/OrderStatus"
+          },
+          "totalPrice": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "OrderStatus": {
+        "type": "string",
+        "enum": [
+          "CANCELLED",
+          "DELIVERED",
+          "OUT_FOR_DELIVERY",
+          "PREPARING",
+          "PENDING"
+        ]
+      },
+      "OrderUpdate": {
+        "required": [
+          "status"
+        ],
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/OrderStatus"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PizzaResponse": {
+        "required": [
+          "basePrice",
+          "description",
+          "id",
+          "name",
+          "toppings"
+        ],
+        "type": "object",
+        "properties": {
+          "basePrice": {
+            "type": "number",
+            "format": "double"
+          },
+          "description": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "toppings": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "default": {
+        "type": "oauth2",
+        "flows": {
+          "implicit": {
+            "authorizationUrl": "https:///authorize",
+            "scopes": {}
+          }
+        }
+      }
+    }
+  },
+  "x-wso2-disable-security": "false"
+}
