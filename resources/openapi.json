@@ -1,13 +1,13 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "order_management_service",
+    "title": "order-management-service",
     "contact": {},
     "version": "v1.0"
   },
   "servers": [
     {
-      "url": "https://1f955b4b-88c3-417b-9e88-d33047878100-prod.e1-us-east-azure.bijiraapis.dev/pizzamanagment/order-management-service/v1.0"
+      "url": "https://f2c7f522-ef47-48ce-a429-3fc2f15d2011-prod.e1-us-east-azure.bijiraapis.dev/pizzashop/order-management-service/v1.0"
     }
   ],
   "paths": {

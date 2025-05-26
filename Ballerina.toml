@@ -6,4 +6,4 @@ version = "0.1.0"
 [[tool.openapi]]
 id = "mg"
 targetModule = "mg"
-filePath = "/Users/admin/Downloads/document (6).json"
+filePath = "./resources/openapi.json"

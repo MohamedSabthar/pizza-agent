@@ -1,9 +1,8 @@
-import ballerina/http;
 import ballerinax/ai;
 
 import admin/pizza_managment_agent.mg;
 
-final ai:OpenAiProvider _orderManagmentAgentModel = check new (openAiApiKey, "gpt-4o");
+final ai:OpenAiProvider _orderManagmentAgentModel = check new (openAiApiKey, "gpt-4o", "https://4.194.24.252:8243/openai/1.0.0", secureSocket = {cert: "./resources/gw-cert.crt", verifyHostName: false});
 final ai:Agent _orderManagmentAgentAgent = check new (
     systemPrompt = {role: "Order Management Assistant", instructions: string `You are a pizza order management assistant, designed to guide cashiers through each step of the order management process, asking relevant questions to ensure orders are handled accurately and efficiently. Always show the order id when possible.`}, model = _orderManagmentAgentModel, tools = [getPizzas, createOrder, getOrder, updateOrder], verbose = true
 );
