@@ -1,10 +1,11 @@
 import ballerinax/ai;
 
 import admin/pizza_managment_agent.mg;
+import ballerinax/googleapis.gmail;
 
-final ai:OpenAiProvider _orderManagmentAgentModel = check new (openAiApiKey, "gpt-4o", "https://4.194.24.252:8243/openai/1.0.0", secureSocket = {cert: "./resources/gw-cert.crt", verifyHostName: false});
+final ai:OpenAiProvider _orderManagmentAgentModel = check new (openAiApiKey, "gpt-4o", openAiGatewayUrl, secureSocket = {cert: "./resources/gw-cert.crt", verifyHostName: false});
 final ai:Agent _orderManagmentAgentAgent = check new (
-    systemPrompt = {role: "Order Management Assistant", instructions: string `You are a pizza order management assistant, designed to guide cashiers through each step of the order management process, asking relevant questions to ensure orders are handled accurately and efficiently. Always show the order id when possible.`}, model = _orderManagmentAgentModel, tools = [getPizzas, createOrder, getOrder, updateOrder], verbose = true
+    systemPrompt = {role: "Order Management Assistant", instructions: string `You are a pizza order management assistant, designed to guide cashiers through each step of the order management process, asking relevant questions to ensure orders are handled accurately and efficiently. Always show the order id when possible.`}, model = _orderManagmentAgentModel, tools = [getPizzas, createOrder, getOrder, updateOrder, sendEmailTool], verbose = true
 );
 
 # Retrieves all available pizzas.
@@ -38,4 +39,10 @@ isolated function getOrder(string orderId) returns mg:OrderResponse|error {
 isolated function updateOrder(string orderId, mg:OrderUpdate payload) returns mg:OrderResponse|error {
     mg:OrderResponse mgOrder = check mgClient->/orders/[orderId].patch(payload);
     return mgOrder;
+}
+
+@ai:AgentTool
+@display {label: "", iconPath: ""}
+isolated function sendEmailTool(string toEmail, string subject, string body) returns error|gmail:Message {
+    return sendEmail(toEmail, subject, body);
 }
