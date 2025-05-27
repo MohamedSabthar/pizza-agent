@@ -9,7 +9,7 @@ final ai:Agent _orderManagmentAgentAgent = check new (
 );
 
 # Retrieves all available pizzas.
-
+# + return - Array of pizza responses or an error if retrieval fails
 @ai:AgentTool
 @display {label: "", iconPath: "https://bcentral-packageicons.azureedge.net/images/admin_pizza_managment_agent.mg_0.1.0.png"}
 isolated function getPizzas() returns mg:PizzaResponse[]|error {
@@ -18,6 +18,8 @@ isolated function getPizzas() returns mg:PizzaResponse[]|error {
 }
 
 # Creates a new order.
+# + payload - The order request containing order details
+# + return - Order response containing the created order details or an error if creation fails
 @ai:AgentTool
 @display {label: "", iconPath: "https://bcentral-packageicons.azureedge.net/images/admin_pizza_managment_agent.mg_0.1.0.png"}
 isolated function createOrder(mg:OrderRequest payload) returns mg:OrderResponse|error {
@@ -25,7 +27,9 @@ isolated function createOrder(mg:OrderRequest payload) returns mg:OrderResponse|
     return mgOrder;
 }
 
-# Retrieves a specific order by ID
+# Retrieves a specific order by ID.
+# + orderId - The unique identifier of the order
+# + return - Order response containing the order details or an error if retrieval fails
 @ai:AgentTool
 @display {label: "", iconPath: "https://bcentral-packageicons.azureedge.net/images/admin_pizza_managment_agent.mg_0.1.0.png"}
 isolated function getOrder(string orderId) returns mg:OrderResponse|error {
@@ -33,7 +37,10 @@ isolated function getOrder(string orderId) returns mg:OrderResponse|error {
     return mgOrder;
 }
 
-# Updates the status of an order
+# Updates the status of an order.
+# + orderId - The unique identifier of the order to update
+# + payload - The order update containing the new status
+# + return - Updated order response or an error if update fails
 @ai:AgentTool
 @display {label: "", iconPath: "https://bcentral-packageicons.azureedge.net/images/admin_pizza_managment_agent.mg_0.1.0.png"}
 isolated function updateOrder(string orderId, mg:OrderUpdate payload) returns mg:OrderResponse|error {
@@ -41,9 +48,11 @@ isolated function updateOrder(string orderId, mg:OrderUpdate payload) returns mg
     return mgOrder;
 }
 
-# Send an email to a specific email address 
-# + toEmail - Email address of the receipient 
-
+# Send an email to a specific email address.
+# + toEmail - Email address of the recipient
+# + subject - Subject of the email
+# + body - Content of the email
+# + return - Gmail message response or an error if sending fails
 @ai:AgentTool
 @display {label: "", iconPath: ""}
 isolated function sendEmailTool(string toEmail, string subject, string body) returns error|gmail:Message {
