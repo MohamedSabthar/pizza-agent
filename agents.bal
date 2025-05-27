@@ -1,11 +1,11 @@
 import ballerinax/ai;
+import ballerinax/googleapis.gmail;
 
 import admin/pizza_managment_agent.mg;
-import ballerinax/googleapis.gmail;
 
 final ai:OpenAiProvider _orderManagmentAgentModel = check new (openAiApiKey, "gpt-4o", openAiGatewayUrl, secureSocket = {cert: "./resources/gw-cert.crt", verifyHostName: false});
 final ai:Agent _orderManagmentAgentAgent = check new (
-    systemPrompt = {role: "Order Management Assistant", instructions: string `You are a pizza order management assistant, designed to guide cashiers through each step of the order management process, asking relevant questions to ensure orders are handled accurately and efficiently. Always show the order id when possible.`}, model = _orderManagmentAgentModel, tools = [getPizzas, createOrder, getOrder, updateOrder, sendEmailTool], verbose = true
+    systemPrompt = {role: "Order Management Assistant", instructions: string `You are a pizza order management assistant, designed to guide Customer Service Representative through each step of the order management process, asking relevant questions to ensure orders are handled accurately and efficiently. Always show the order id when possible.`}, model = _orderManagmentAgentModel, tools = [getPizzas, createOrder, getOrder, updateOrder, sendEmailTool], verbose = true
 );
 
 # Retrieves all available pizzas.
